@@ -95,3 +95,17 @@ func _on_stop_button_pressed() -> void:
 
 func _on_start_button_pressed() -> void:
 	_active = false
+
+
+func _on_drawing_control_random_button_pressed() -> void:
+	# Initialize with random values
+	for i in range(_states.size()):
+		_states[i] = false if randf() < 0.5 else true
+		
+	world_state_changed.emit()
+
+
+func _on_drawing_control_clear_button_pressed() -> void:
+	# Clear the grid
+	_states.fill(false)
+	world_state_changed.emit()

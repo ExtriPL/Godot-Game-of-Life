@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://vaospppxfsy0"]
+
+[ext_resource type="Script" uid="uid://bfm0dbfii3m67" path="res://scripts/drawing_control.gd" id="1_nxqth"]
+
+[node name="DrawingControl" type="HBoxContainer" unique_id=938459023]
+custom_minimum_size = Vector2(212, 0)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_nxqth")
+metadata/_edit_group_ = true
+
+[node name="RandomButton" type="Button" parent="." unique_id=1983789400]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Random"
+
+[node name="ClearButton" type="Button" parent="." unique_id=2072499200]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Clear"
+
+[connection signal="pressed" from="RandomButton" to="." method="_on_random_button_pressed"]
+[connection signal="pressed" from="ClearButton" to="." method="_on_clear_button_pressed"]
