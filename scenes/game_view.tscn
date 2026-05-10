@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cb4ptvisv7udj" path="res://scenes/mode_selector.tscn" id="4_sbqlh"]
 [ext_resource type="Script" uid="uid://dparmhsops2h5" path="res://scripts/world_drawer.gd" id="6_8bnbg"]
 [ext_resource type="Texture2D" uid="uid://dj78p0a3scjrt" path="res://sprites/white_pixel.png" id="7_31lf7"]
+[ext_resource type="Script" uid="uid://dovs6iwrmhfi" path="res://scripts/camera_controller.gd" id="12_n04eh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nc4dn"]
 bg_color = Color(0.47058824, 0.47058824, 0.47058824, 1)
@@ -98,16 +99,27 @@ offset = Vector2(0.5, 0.5)
 script = ExtResource("1_pkiub")
 properties = NodePath("../Properties")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=733951472]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=733951472 node_paths=PackedStringArray("properties")]
+limit_left = -1000
+limit_top = -1000
+limit_right = 1000
+limit_bottom = 1000
+script = ExtResource("12_n04eh")
+properties = NodePath("../Grid/Properties")
 
 [connection signal="mouse_entered" from="Canvas/GridClickableArea" to="Grid/Drawer" method="_on_grid_clickable_area_mouse_entered"]
+[connection signal="mouse_entered" from="Canvas/GridClickableArea" to="Camera2D" method="_on_grid_clickable_area_mouse_entered"]
 [connection signal="mouse_exited" from="Canvas/GridClickableArea" to="Grid/Drawer" method="_on_grid_clickable_area_mouse_exited"]
+[connection signal="mouse_exited" from="Canvas/GridClickableArea" to="Camera2D" method="_on_grid_clickable_area_mouse_exited"]
 [connection signal="grid_dimensions_changed" from="Canvas/Controls/HContainer/PropertiesControl" to="Grid/Properties" method="_selected_grid_dimensions_changed"]
 [connection signal="clear_button_pressed" from="Canvas/Controls/HContainer/DrawingControl" to="Grid/Drawer" method="_on_drawing_control_clear_button_pressed"]
 [connection signal="random_button_pressed" from="Canvas/Controls/HContainer/DrawingControl" to="Grid/Drawer" method="_on_drawing_control_random_button_pressed"]
 [connection signal="drawing_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Grid/Drawer" method="_on_drawing_mode_selected"]
+[connection signal="drawing_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Camera2D" method="_disable_dragging"]
 [connection signal="movement_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Grid/Drawer" method="_on_movement_mode_selected"]
+[connection signal="movement_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Camera2D" method="_enable_dragging"]
 [connection signal="removing_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Grid/Drawer" method="_on_removing_mode_selected"]
+[connection signal="removing_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Camera2D" method="_disable_dragging"]
 [connection signal="pause_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="." method="_on_pause_button_pressed"]
 [connection signal="pause_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/TimeControl" method="_disable_time_buttons"]
 [connection signal="resume_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="." method="_on_resume_button_pressed"]
@@ -118,6 +130,7 @@ properties = NodePath("../Properties")
 [connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/DrawingControl" method="_on_start_button_pressed"]
 [connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/ModeSelector" method="_on_start_button_pressed"]
 [connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Grid/Drawer" method="_on_start_button_pressed"]
+[connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Camera2D" method="_enable_dragging"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="." method="_on_stop_button_pressed"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/TimeControl" method="_hide_time_buttons"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/PropertiesControl" method="_on_stop_button_pressed"]

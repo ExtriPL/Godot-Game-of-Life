@@ -38,7 +38,7 @@ layout_mode = 2
 theme = SubResource("Theme_pq4au")
 theme_override_constants/set_min_buttons_width_from_icons = 1
 min_value = 96.0
-max_value = 500.0
+max_value = 150.0
 value = 96.0
 
 [node name="GridHeight" type="HBoxContainer" parent="." unique_id=507878196]
@@ -57,7 +57,7 @@ layout_mode = 2
 theme = SubResource("Theme_pq4au")
 theme_override_constants/set_min_buttons_width_from_icons = 1
 min_value = 54.0
-max_value = 500.0
+max_value = 150.0
 value = 54.0
 
 [connection signal="value_changed" from="GridWidth/SpinBox" to="." method="_on_grid_width_changed"]

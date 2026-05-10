@@ -35,7 +35,7 @@ func _process(_delta: float) -> void:
 	
 	
 func _perform_drawing(grid_position: Vector2i) -> void:
-	if not Input.is_action_pressed("world_drawing"):
+	if not Input.is_action_pressed("tool_use"):
 		return
 	
 	# Correct action was pressed. We can change the state at the given position
