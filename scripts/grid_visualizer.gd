@@ -1,16 +1,13 @@
+class_name GridVisualizer
 extends Node2D
 
 ## Properties of a grid that will be visualized
 @export var properties: GridProperties
-## Class that holds the state of the world
-@export var state_holder: WorldStateHolder
 
 ## Size of a single cell in the form of a vector
 var _grid_cell_size: Vector2
-
-func _ready() -> void:
-	redraw()
-	state_holder.world_state_changed.connect(redraw)
+## Instance that holds the state of the world
+var _state_holder: WorldStateHolder
 
 
 func _draw() -> void:
@@ -22,7 +19,7 @@ func _draw() -> void:
 	
 	for y in range(0, dimensions.y):
 		for x in range(0, dimensions.x):
-			if not state_holder.get_state_at(x, y):
+			if not _state_holder.get_state_at(x, y):
 				continue
 				
 			# Cell is alive. We need to draw it
@@ -44,6 +41,15 @@ func _draw() -> void:
 		var start_pos: Vector2 = properties.grid_to_world_position(Vector2i(0, y))
 		var end_pos: Vector2 = properties.grid_to_world_position(Vector2i(dimensions.x, y))
 		draw_line(start_pos, end_pos, line_color)
+		
+		
+func change_state_holder(value: WorldStateHolder) -> void:
+	if _state_holder != null:
+		_state_holder.world_state_changed.disconnect(redraw)
+		
+	_state_holder = value
+	_state_holder.world_state_changed.connect(redraw)
+	redraw()
 	
 		
 ## Redraws the grid based on the newest properties

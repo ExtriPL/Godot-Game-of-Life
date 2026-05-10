@@ -13,6 +13,11 @@ var _states: Array[bool]
 func _ready() -> void:
 	_grid_properties_changed()
 	
+
+## Copies states from the [param source] object
+func copy_states_from(source: WorldStateHolder) -> void:
+	_states = source._states.duplicate()
+	
 ## Checks if the cell is alive at the given grid position
 ## returns: True, if the cell is alive. False otherwise
 func get_state_at(x: int, y: int) -> bool:
