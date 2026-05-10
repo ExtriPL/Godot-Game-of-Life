@@ -81,6 +81,10 @@ resume_simulation={
 
 3d/physics_engine="Jolt Physics"
 
+[plugins]
+
+licenses/indentation=2
+
 [rendering]
 
 rendering_device/driver.windows="d3d12"
