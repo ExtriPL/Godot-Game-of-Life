@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://copqt3hyvb2yn" path="res://scripts/world_updater.gd" id="1_u2e3f"]
 [ext_resource type="PackedScene" uid="uid://cv5oks6utqwot" path="res://scenes/properties_control.tscn" id="2_na2vj"]
 [ext_resource type="PackedScene" uid="uid://bikwoxnuo1us2" path="res://scenes/phase_buttons.tscn" id="3_rljdn"]
+[ext_resource type="PackedScene" uid="uid://cb4ptvisv7udj" path="res://scenes/mode_selector.tscn" id="4_sbqlh"]
 [ext_resource type="Script" uid="uid://dparmhsops2h5" path="res://scripts/world_drawer.gd" id="6_8bnbg"]
 [ext_resource type="Texture2D" uid="uid://dj78p0a3scjrt" path="res://sprites/white_pixel.png" id="7_31lf7"]
 
@@ -55,6 +56,9 @@ base_time_interval = 0.2
 [node name="PropertiesControl" parent="Canvas/Controls/HContainer" unique_id=1138384911 instance=ExtResource("2_na2vj")]
 layout_mode = 2
 
+[node name="ModeSelector" parent="Canvas/Controls/HContainer" unique_id=537010809 instance=ExtResource("4_sbqlh")]
+layout_mode = 2
+
 [node name="PhaseButtons" parent="Canvas/Controls/HContainer" unique_id=1217455438 instance=ExtResource("3_rljdn")]
 layout_mode = 2
 
@@ -74,14 +78,14 @@ cell_alive_color = Color(0, 0.33765262, 0, 1)
 script = ExtResource("1_u2e3f")
 properties = NodePath("../Properties")
 
-[node name="Drawer" type="Node" parent="Grid" unique_id=765520696 node_paths=PackedStringArray("camera", "properties")]
+[node name="Drawer" type="Node" parent="Grid" unique_id=765520696 node_paths=PackedStringArray("_camera", "properties")]
 script = ExtResource("6_8bnbg")
-camera = NodePath("../../Camera2D")
-drawing_color = Color(0, 0.3372549, 0, 0.5019608)
-removing_color = Color(0.5254902, 0, 0.13725491, 0.5019608)
+_camera = NodePath("../../Camera2D")
+_drawing_color = Color(0, 0.3372549, 0, 0.5019608)
+_removing_color = Color(0.5294118, 0, 0.101960786, 0.5019608)
 properties = NodePath("../Properties")
 
-[node name="DrawingPixel" type="Sprite2D" parent="Grid/Drawer" unique_id=1957674192]
+[node name="Indicator" type="Sprite2D" parent="Grid/Drawer" unique_id=1957674192]
 scale = Vector2(20, 20)
 texture = ExtResource("7_31lf7")
 offset = Vector2(0.5, 0.5)
@@ -95,6 +99,9 @@ properties = NodePath("../Properties")
 [connection signal="mouse_entered" from="Canvas/GridClickableArea" to="Grid/Drawer" method="_on_grid_clickable_area_mouse_entered"]
 [connection signal="mouse_exited" from="Canvas/GridClickableArea" to="Grid/Drawer" method="_on_grid_clickable_area_mouse_exited"]
 [connection signal="grid_dimensions_changed" from="Canvas/Controls/HContainer/PropertiesControl" to="Grid/Properties" method="_selected_grid_dimensions_changed"]
+[connection signal="drawing_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Grid/Drawer" method="_on_drawing_mode_selected"]
+[connection signal="movement_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Grid/Drawer" method="_on_movement_mode_selected"]
+[connection signal="removing_mode_selected" from="Canvas/Controls/HContainer/ModeSelector" to="Grid/Drawer" method="_on_removing_mode_selected"]
 [connection signal="pause_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="." method="_on_pause_button_pressed"]
 [connection signal="pause_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/TimeControl" method="_disable_time_buttons"]
 [connection signal="resume_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="." method="_on_resume_button_pressed"]
@@ -102,12 +109,14 @@ properties = NodePath("../Properties")
 [connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="." method="_on_start_button_pressed"]
 [connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/TimeControl" method="_show_time_buttons"]
 [connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/PropertiesControl" method="_on_start_button_pressed"]
+[connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/ModeSelector" method="_on_start_button_pressed"]
 [connection signal="start_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Grid/Drawer" method="_on_start_button_pressed"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="." method="_on_stop_button_pressed"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/TimeControl" method="_hide_time_buttons"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/PropertiesControl" method="_on_stop_button_pressed"]
+[connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/ModeSelector" method="_on_stop_button_pressed"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Grid/Drawer" method="_on_stop_button_pressed"]
 [connection signal="timeout" from="UpdateTimer" to="Grid/Updater" method="_update_world_state"]
 [connection signal="properties_changed" from="Grid/Properties" to="Grid/Updater" method="_grid_properties_changed"]
-[connection signal="properties_changed" from="Grid/Properties" to="Grid/Visualizer" method="redraw"]
 [connection signal="properties_changed" from="Grid/Properties" to="Grid/Drawer" method="_grid_properties_changed"]
+[connection signal="properties_changed" from="Grid/Properties" to="Grid/Visualizer" method="redraw"]

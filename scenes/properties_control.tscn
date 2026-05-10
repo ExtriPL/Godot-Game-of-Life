@@ -20,6 +20,7 @@ custom_minimum_size = Vector2(200, 0)
 offset_right = 172.0
 offset_bottom = 31.0
 script = ExtResource("1_0cfe5")
+metadata/_edit_group_ = true
 
 [node name="GridWidth" type="HBoxContainer" parent="." unique_id=2126807354]
 custom_minimum_size = Vector2(212, 0)
