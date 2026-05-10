@@ -1,0 +1,7 @@
+[gd_resource type="Shortcut" format=3 uid="uid://dpexnbjhuiwqv"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_8enhs"]
+action = &"start_simulation"
+
+[resource]
+events = [SubResource("InputEventAction_8enhs")]

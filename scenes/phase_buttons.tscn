@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://bikwoxnuo1us2"]
 
 [ext_resource type="Script" uid="uid://pcknix8n1lor" path="res://scripts/phase_buttons.gd" id="1_iqnjs"]
+[ext_resource type="Shortcut" uid="uid://dtt4gjfwh6myw" path="res://shortcuts/stop_shortcut.tres" id="2_jfrsg"]
+[ext_resource type="Shortcut" uid="uid://dpexnbjhuiwqv" path="res://shortcuts/start_shortcut.tres" id="2_lmamh"]
+[ext_resource type="Shortcut" uid="uid://c4faev3c50moc" path="res://shortcuts/pause_shortcut.tres" id="3_bexie"]
+[ext_resource type="Shortcut" uid="uid://vbdcofo4dttt" path="res://shortcuts/resume_shortcut.tres" id="4_dcymx"]
 
 [node name="PhaseButtons" type="VBoxContainer" unique_id=1217455438]
 custom_minimum_size = Vector2(212, 0)
@@ -17,6 +21,7 @@ custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
+shortcut = ExtResource("2_jfrsg")
 text = "Stop"
 
 [node name="PauseButton" type="Button" parent="RunningButtons" unique_id=1378606630]
@@ -24,6 +29,7 @@ custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
+shortcut = ExtResource("3_bexie")
 text = "Pause"
 
 [node name="ResumeButton" type="Button" parent="RunningButtons" unique_id=1808248851]
@@ -32,11 +38,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 15
 disabled = true
+shortcut = ExtResource("4_dcymx")
 text = "Resume"
 
 [node name="StartButton" type="Button" parent="." unique_id=383537919]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
+shortcut = ExtResource("2_lmamh")
 text = "Start"
 
 [connection signal="pressed" from="RunningButtons/StopButton" to="." method="_on_stop_button_pressed"]

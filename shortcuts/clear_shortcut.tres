@@ -1,0 +1,7 @@
+[gd_resource type="Shortcut" format=3 uid="uid://cvlwresxcdm02"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_8enhs"]
+action = &"clear_grid"
+
+[resource]
+events = [SubResource("InputEventAction_8enhs")]

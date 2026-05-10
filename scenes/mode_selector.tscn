@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://b3fc6i7kqreo1" path="res://scripts/mode_selector.gd" id="1_hulb4"]
 [ext_resource type="Texture2D" uid="uid://dj78p0a3scjrt" path="res://sprites/white_pixel.png" id="1_xwmr8"]
+[ext_resource type="Shortcut" uid="uid://d0g1sw0y56qme" path="res://shortcuts/movement_shortcut.tres" id="2_qmwwv"]
+[ext_resource type="Shortcut" uid="uid://dffsuited1mev" path="res://shortcuts/drawing_shortcut.tres" id="3_o6oti"]
+[ext_resource type="Shortcut" uid="uid://k8i26sp56km7" path="res://shortcuts/removing_shortcut.tres" id="5_16kv6"]
 
 [node name="ModeSelector" type="HBoxContainer" unique_id=537010809]
 custom_minimum_size = Vector2(212, 0)
@@ -16,6 +19,7 @@ metadata/_edit_group_ = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
+shortcut = ExtResource("2_qmwwv")
 text = "M"
 
 [node name="DrawingButton" type="Button" parent="." unique_id=340626240]
@@ -27,6 +31,7 @@ theme_override_colors/icon_pressed_color = Color(0, 0.27450982, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0.39215687, 0, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0.27450982, 0, 1)
 theme_override_font_sizes/font_size = 20
+shortcut = ExtResource("3_o6oti")
 icon = ExtResource("1_xwmr8")
 expand_icon = true
 
@@ -39,6 +44,7 @@ theme_override_colors/icon_pressed_color = Color(0.35, 0, 0.0700001, 1)
 theme_override_colors/icon_hover_color = Color(0.7, 0, 0.1400002, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0.35, 0, 0.0700001, 1)
 theme_override_font_sizes/font_size = 20
+shortcut = ExtResource("5_16kv6")
 icon = ExtResource("1_xwmr8")
 expand_icon = true
 

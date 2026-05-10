@@ -1,0 +1,7 @@
+[gd_resource type="Shortcut" format=3 uid="uid://d0g1sw0y56qme"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_8enhs"]
+action = &"switch_to_movement"
+
+[resource]
+events = [SubResource("InputEventAction_8enhs")]

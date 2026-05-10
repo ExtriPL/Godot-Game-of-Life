@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://vaospppxfsy0"]
 
 [ext_resource type="Script" uid="uid://bfm0dbfii3m67" path="res://scripts/drawing_control.gd" id="1_nxqth"]
+[ext_resource type="Shortcut" uid="uid://cvlwresxcdm02" path="res://shortcuts/clear_shortcut.tres" id="2_4jpbs"]
 
 [node name="DrawingControl" type="HBoxContainer" unique_id=938459023]
 custom_minimum_size = Vector2(212, 0)
@@ -19,6 +20,7 @@ text = "Random"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
+shortcut = ExtResource("2_4jpbs")
 text = "Clear"
 
 [connection signal="pressed" from="RandomButton" to="." method="_on_random_button_pressed"]
