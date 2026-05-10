@@ -1,8 +1,4 @@
-class_name WorldUpdater
 extends WorldStateHolder
-
-## Signal emitted whenever the state of the world is updated
-signal world_updated
 
 ## Array that contains the internal state of the world cells
 var _previous_states: Array[bool]
@@ -19,7 +15,7 @@ func _update_world_state() -> void:
 			var alive: bool = _should_be_alive_at(x, y)
 			set_state_at(x, y, alive)
 			
-	world_updated.emit()
+	world_state_changed.emit()
 	
 	
 ## Checks if the cell was alive at the given grid position in the previous interation

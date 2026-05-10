@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://copqt3hyvb2yn" path="res://scripts/world_updater.gd" id="1_u2e3f"]
 [ext_resource type="PackedScene" uid="uid://cv5oks6utqwot" path="res://scenes/properties_control.tscn" id="2_na2vj"]
 [ext_resource type="PackedScene" uid="uid://bikwoxnuo1us2" path="res://scenes/phase_buttons.tscn" id="3_rljdn"]
+[ext_resource type="Script" uid="uid://dparmhsops2h5" path="res://scripts/world_drawer.gd" id="6_8bnbg"]
+[ext_resource type="Texture2D" uid="uid://dj78p0a3scjrt" path="res://sprites/white_pixel.png" id="7_31lf7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nc4dn"]
 bg_color = Color(0.47058824, 0.47058824, 0.47058824, 1)
@@ -17,6 +19,14 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_nc4dn")
 [node name="GameView" type="Node2D" unique_id=1799287982]
 
 [node name="Canvas" type="CanvasLayer" parent="." unique_id=291886520]
+
+[node name="GridClickableArea" type="Control" parent="Canvas" unique_id=1511902219]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Controls" type="PanelContainer" parent="Canvas" unique_id=99359666]
 anchors_preset = 1
@@ -62,13 +72,27 @@ cell_alive_color = Color(0, 0.33765262, 0, 1)
 script = ExtResource("1_u2e3f")
 properties = NodePath("../Properties")
 
+[node name="Drawer" type="Node" parent="Grid" unique_id=765520696 node_paths=PackedStringArray("camera", "properties")]
+script = ExtResource("6_8bnbg")
+camera = NodePath("../../Camera2D")
+drawing_color = Color(0, 0.3372549, 0, 0.5019608)
+removing_color = Color(0.5254902, 0, 0.13725491, 0.5019608)
+properties = NodePath("../Properties")
+
+[node name="DrawingPixel" type="Sprite2D" parent="Grid/Drawer" unique_id=1957674192]
+scale = Vector2(20, 20)
+texture = ExtResource("7_31lf7")
+offset = Vector2(0.5, 0.5)
+
 [node name="Visualizer" type="Node2D" parent="Grid" unique_id=1249074663 node_paths=PackedStringArray("properties", "state_holder")]
 script = ExtResource("1_pkiub")
 properties = NodePath("../Properties")
-state_holder = NodePath("../Updater")
+state_holder = NodePath("../Drawer")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=733951472]
 
+[connection signal="mouse_entered" from="Canvas/GridClickableArea" to="Grid/Drawer" method="_on_grid_clickable_area_mouse_entered"]
+[connection signal="mouse_exited" from="Canvas/GridClickableArea" to="Grid/Drawer" method="_on_grid_clickable_area_mouse_exited"]
 [connection signal="grid_dimensions_changed" from="Canvas/Controls/HContainer/PropertiesControl" to="Grid/Properties" method="_selected_grid_dimensions_changed"]
 [connection signal="pause_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/TimeControl" method="_disable_time_buttons"]
 [connection signal="resume_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/TimeControl" method="_enable_time_buttons"]
@@ -79,4 +103,3 @@ state_holder = NodePath("../Updater")
 [connection signal="timeout" from="UpdateTimer" to="Grid/Updater" method="_update_world_state"]
 [connection signal="properties_changed" from="Grid/Properties" to="Grid/Updater" method="_grid_properties_changed"]
 [connection signal="properties_changed" from="Grid/Properties" to="Grid/Visualizer" method="redraw"]
-[connection signal="world_updated" from="Grid/Updater" to="Grid/Visualizer" method="redraw"]

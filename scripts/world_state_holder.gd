@@ -2,6 +2,9 @@
 class_name WorldStateHolder
 extends Node
 
+## Signal emitted whenever the state of the world is changed
+signal world_state_changed
+
 ## Properties of a grid this class holds
 @export var properties: GridProperties
 

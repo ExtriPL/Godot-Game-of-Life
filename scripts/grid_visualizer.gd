@@ -5,13 +5,12 @@ extends Node2D
 ## Class that holds the state of the world
 @export var state_holder: WorldStateHolder
 
-## Point at which (0, 0) grid point will be drawn
-var _start_offset: Vector2
 ## Size of a single cell in the form of a vector
 var _grid_cell_size: Vector2
 
 func _ready() -> void:
-	redraw()	
+	redraw()
+	state_holder.world_state_changed.connect(redraw)
 
 
 func _draw() -> void:
@@ -27,7 +26,7 @@ func _draw() -> void:
 				continue
 				
 			# Cell is alive. We need to draw it
-			var cell_position: Vector2 = _grid_to_world_position(x, y)
+			var cell_position: Vector2 = properties.grid_to_world_position(Vector2i(x, y))
 			var rect: Rect2 = Rect2(cell_position, _grid_cell_size)
 			draw_rect(rect, cell_color, true)
 	
@@ -36,24 +35,19 @@ func _draw() -> void:
 	
 	# Draw vertical lines
 	for x in range(0, dimensions.x + 1):
-		var start_pos: Vector2 = _grid_to_world_position(x, 0)
-		var end_pos: Vector2 = _grid_to_world_position(x, dimensions.y)
+		var start_pos: Vector2 = properties.grid_to_world_position(Vector2i(x, 0))
+		var end_pos: Vector2 = properties.grid_to_world_position(Vector2i(x, dimensions.y))
 		draw_line(start_pos, end_pos, line_color)
 		
 	# Draw horizontal lines
 	for y in range(0, dimensions.y + 1):
-		var start_pos: Vector2 = _grid_to_world_position(0, y)
-		var end_pos: Vector2 = _grid_to_world_position(dimensions.x, y)
+		var start_pos: Vector2 = properties.grid_to_world_position(Vector2i(0, y))
+		var end_pos: Vector2 = properties.grid_to_world_position(Vector2i(dimensions.x, y))
 		draw_line(start_pos, end_pos, line_color)
 	
 		
 ## Redraws the grid based on the newest properties
 func redraw() -> void:
-	_start_offset = -properties.dimensions / 2.0 * properties.cell_size
 	_grid_cell_size = Vector2(properties.cell_size, properties.cell_size)
 	queue_redraw()
 	
-	
-## Converts postion from grid to world coordinates
-func _grid_to_world_position(x: int, y: int) -> Vector2:
-	return _start_offset + Vector2(x, y) * properties.cell_size
