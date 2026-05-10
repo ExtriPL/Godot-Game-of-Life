@@ -137,6 +137,7 @@ properties = NodePath("../Grid/Properties")
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/DrawingControl" method="_on_stop_button_pressed"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Canvas/Controls/HContainer/ModeSelector" method="_on_stop_button_pressed"]
 [connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Grid/Drawer" method="_on_stop_button_pressed"]
+[connection signal="stop_button_pressed" from="Canvas/Controls/HContainer/PhaseButtons" to="Camera2D" method="_disable_dragging"]
 [connection signal="timeout" from="UpdateTimer" to="Grid/Updater" method="_update_world_state"]
 [connection signal="properties_changed" from="Grid/Properties" to="Grid/Updater" method="_grid_properties_changed"]
 [connection signal="properties_changed" from="Grid/Properties" to="Grid/Drawer" method="_grid_properties_changed"]
