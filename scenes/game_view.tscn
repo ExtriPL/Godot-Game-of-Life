@@ -1,10 +1,42 @@
 [gd_scene format=3 uid="uid://c7ykknk5jgo1r"]
 
 [ext_resource type="Script" uid="uid://dxi2owhr2e0w5" path="res://scripts/grid_properties.gd" id="1_i7k6m"]
+[ext_resource type="PackedScene" uid="uid://du5nb76yepynx" path="res://scenes/time_control.tscn" id="1_nc4dn"]
 [ext_resource type="Script" uid="uid://bggpim7gvuung" path="res://scripts/grid_visualizer.gd" id="1_pkiub"]
 [ext_resource type="Script" uid="uid://copqt3hyvb2yn" path="res://scripts/world_updater.gd" id="1_u2e3f"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nc4dn"]
+bg_color = Color(0.78431374, 0.78431374, 0.78431374, 1)
+
+[sub_resource type="Theme" id="Theme_nc4dn"]
+default_font_size = 4
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_nc4dn")
+
 [node name="GameView" type="Node2D" unique_id=1799287982]
+
+[node name="Canvas" type="CanvasLayer" parent="." unique_id=291886520]
+
+[node name="Controls" type="PanelContainer" parent="Canvas" unique_id=99359666]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -320.0
+offset_bottom = 50.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_nc4dn")
+
+[node name="HContainer" type="VBoxContainer" parent="Canvas/Controls" unique_id=782739218]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="TimeControl" parent="Canvas/Controls/HContainer" unique_id=1191343558 node_paths=PackedStringArray("timer") instance=ExtResource("1_nc4dn")]
+layout_mode = 2
+timer = NodePath("../../../../UpdateTimer")
+base_time_interval = 0.2
 
 [node name="UpdateTimer" type="Timer" parent="." unique_id=626593022]
 wait_time = 0.2
@@ -19,11 +51,11 @@ dimensions = Vector2i(96, 54)
 line_color = Color(0.32416296, 0.3241629, 0.32416287, 1)
 cell_alive_color = Color(0, 0.33765262, 0, 1)
 
-[node name="Visualizer" type="Node2D" parent="Grid" unique_id=1249074663]
-script = ExtResource("1_pkiub")
-
 [node name="Updater" type="Node" parent="Grid" unique_id=261869783]
 script = ExtResource("1_u2e3f")
+
+[node name="Visualizer" type="Node2D" parent="Grid" unique_id=1249074663]
+script = ExtResource("1_pkiub")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=733951472]
 

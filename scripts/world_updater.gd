@@ -64,21 +64,7 @@ func _get_array_position(x: int, y: int) -> int:
 
 ## Determines if the cell at the given coordinates should be alive in the next iteration
 func _should_be_alive_at(x: int, y: int) -> bool:
-	# Count cells alive around the given cell
-	var alive_around: int = 0
-	
-	for dx in [-1, 0, 1]:
-		for dy in [-1, 0, 1]:
-			# Check only cells around the given one
-			if dx == 0 and dy == 0:
-				continue
-				
-			var checked_x: int = _wrap_around(x + dx, 0, properties.dimensions.x - 1)
-			var checked_y: int = _wrap_around(y + dy, 0, properties.dimensions.y - 1)
-			
-			if get_state_at_previous(checked_x, checked_y):
-				alive_around += 1
-				
+	var alive_around: int = _get_alive_around(x, y)	
 	var self_alive: bool = get_state_at_previous(x, y)
 	
 	if not self_alive and alive_around == 3:
@@ -98,3 +84,23 @@ func _wrap_around(value: int, min_value: int, max_value: int) -> int:
 		return min_value + (value - max_value) - 1
 		
 	return value
+
+## Obtains number of alive cells around the given position. If the position is around the
+## edges, it is wrapped around
+## returns: Number of cells around the provided position in the previous grid
+func _get_alive_around(x: int, y: int) -> int:
+	var alive_around: int = 0
+	
+	for dx in [-1, 0, 1]:
+		for dy in [-1, 0, 1]:
+			# Check only cells around the given one
+			if dx == 0 and dy == 0:
+				continue
+				
+			var checked_x: int = _wrap_around(x + dx, 0, properties.dimensions.x - 1)
+			var checked_y: int = _wrap_around(y + dy, 0, properties.dimensions.y - 1)
+			
+			if get_state_at_previous(checked_x, checked_y):
+				alive_around += 1
+				
+	return alive_around
