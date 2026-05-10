@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cv5oks6utqwot"]
+
+[ext_resource type="Script" uid="uid://dsj47jtyjwjnu" path="res://scripts/properties_control.gd" id="1_0cfe5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pq4au"]
+bg_color = Color(0.23529412, 0.23529412, 0.23529412, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cfe5"]
+bg_color = Color(0.23529412, 0.23529412, 0.23529412, 1)
+
+[sub_resource type="Theme" id="Theme_pq4au"]
+LineEdit/constants/minimum_character_width = 2
+LineEdit/font_sizes/font_size = 20
+SpinBox/styles/down_background = SubResource("StyleBoxFlat_pq4au")
+SpinBox/styles/up_background = SubResource("StyleBoxFlat_0cfe5")
+
+[node name="PropertiesControl" type="VBoxContainer" unique_id=1138384911]
+clip_contents = true
+custom_minimum_size = Vector2(200, 0)
+offset_right = 172.0
+offset_bottom = 31.0
+script = ExtResource("1_0cfe5")
+
+[node name="GridWidth" type="HBoxContainer" parent="." unique_id=2126807354]
+custom_minimum_size = Vector2(212, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridWidth" unique_id=1957875898]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Grid width"
+
+[node name="SpinBox" type="SpinBox" parent="GridWidth" unique_id=1765194989]
+layout_mode = 2
+theme = SubResource("Theme_pq4au")
+theme_override_constants/set_min_buttons_width_from_icons = 1
+min_value = 96.0
+max_value = 500.0
+value = 96.0
+
+[node name="GridHeight" type="HBoxContainer" parent="." unique_id=507878196]
+custom_minimum_size = Vector2(212, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridHeight" unique_id=1056322536]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Grid height"
+
+[node name="SpinBox" type="SpinBox" parent="GridHeight" unique_id=130966600]
+layout_mode = 2
+theme = SubResource("Theme_pq4au")
+theme_override_constants/set_min_buttons_width_from_icons = 1
+min_value = 54.0
+max_value = 500.0
+value = 54.0
+
+[connection signal="value_changed" from="GridWidth/SpinBox" to="." method="_on_grid_width_changed"]
+[connection signal="value_changed" from="GridHeight/SpinBox" to="." method="_on_grid_height_changed"]

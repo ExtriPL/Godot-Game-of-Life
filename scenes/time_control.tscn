@@ -4,7 +4,6 @@
 [ext_resource type="ButtonGroup" uid="uid://dxlm3jd8avojg" path="res://time_control_group.tres" id="2_kjivr"]
 
 [node name="TimeControl" type="HBoxContainer" unique_id=1191343558]
-custom_minimum_size = Vector2(300, 0)
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_5fluw")
@@ -43,25 +42,7 @@ toggle_mode = true
 button_group = ExtResource("2_kjivr")
 text = "x3"
 
-[node name="Time x4" type="Button" parent="." unique_id=1275743139]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-toggle_mode = true
-button_group = ExtResource("2_kjivr")
-text = "x4"
-
-[node name="Time x5" type="Button" parent="." unique_id=952556690]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-toggle_mode = true
-button_group = ExtResource("2_kjivr")
-text = "x5"
-
 [connection signal="pressed" from="Time xHalf" to="." method="override_time" binds= [0.5]]
 [connection signal="pressed" from="Time x1" to="." method="override_time" binds= [1.0]]
 [connection signal="pressed" from="Time x2" to="." method="override_time" binds= [2.0]]
 [connection signal="pressed" from="Time x3" to="." method="override_time" binds= [3.0]]
-[connection signal="pressed" from="Time x4" to="." method="override_time" binds= [4.0]]
-[connection signal="pressed" from="Time x5" to="." method="override_time" binds= [5.0]]

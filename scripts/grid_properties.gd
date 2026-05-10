@@ -24,3 +24,7 @@ signal properties_changed;
 	set(value):
 		cell_alive_color = value
 		properties_changed.emit()
+		
+		
+func _selected_grid_dimensions_changed(value: Vector2i) -> void:
+	dimensions = value
