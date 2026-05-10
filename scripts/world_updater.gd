@@ -2,12 +2,25 @@ extends WorldStateHolder
 
 ## Array that contains the internal state of the world cells
 var _previous_states: Array[bool]
+## Array that contains shifts that allows getting to the closest neighbor
+static var _around_shifts: Array[Vector2i] = [
+	Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1),
+	Vector2i(-1, 0), Vector2i(1, 0),
+	Vector2i(-1, 1), Vector2i(0, 1), Vector2i(1, 1)
+]
+
+var _alive_around_map: Array[int]
 
 
 func _update_world_state() -> void:
 	# First move the world state to the previous state array and clear the current state
-	_previous_states = _states.duplicate()
-	_states.fill(false)
+	_previous_states = _states
+	_states = []
+	_states.resize(_previous_states.size())
+	
+	_alive_around_map = []
+	_alive_around_map.resize(_previous_states.size())
+	_fill_alive_around_map()
 	
 	## Go through all cells in the grid and update their state
 	for y in range(0, properties.dimensions.y):
@@ -22,12 +35,13 @@ func _update_world_state() -> void:
 ## returns: True, if the cell was alive. False otherwise
 func get_state_at_previous(x: int, y: int) -> bool:
 	return _previous_states[_get_array_position(x, y)]
-	
+
 
 ## Determines if the cell at the given coordinates should be alive in the next iteration
 func _should_be_alive_at(x: int, y: int) -> bool:
-	var alive_around: int = _get_alive_around(x, y)	
-	var self_alive: bool = get_state_at_previous(x, y)
+	var array_index: int = _get_array_position(x, y)
+	var alive_around: int = _alive_around_map[array_index]
+	var self_alive: bool = _previous_states[array_index]
 	
 	if not self_alive and alive_around == 3:
 		return true
@@ -35,6 +49,27 @@ func _should_be_alive_at(x: int, y: int) -> bool:
 		return true
 		
 	return false
+	
+	
+## Fills the alive around map. The filling process happens only when the given cell is alive.
+## This improves the execution speed skipping interations for every dead cell.
+func _fill_alive_around_map() -> void:
+	for y in range(properties.dimensions.y):
+		for x in range(properties.dimensions.x):
+			# Fill around positions only when this cell is alive
+			if not get_state_at_previous(x, y):
+				continue
+		
+			_increase_around_at(x, y)
+				
+
+## Increases value stored in the [_alive_around_map] for cells around the given grid position.
+func _increase_around_at(x: int, y: int) -> void:
+	for shift in _around_shifts:
+		var neighbor_x: int = _wrap_around(x + shift.x, 0, properties.dimensions.x - 1)
+		var neighbor_y: int = _wrap_around(y + shift.y, 0, properties.dimensions.y - 1)
+		var index: int = _get_array_position(neighbor_x, neighbor_y)
+		_alive_around_map[index] += 1
 
 ## Wraps around the provided [param value].
 ## returns: [param value] if it is between [param min_value] and [param max_value]. Otherwise wraps it around the 
@@ -46,26 +81,6 @@ func _wrap_around(value: int, min_value: int, max_value: int) -> int:
 		return min_value + (value - max_value) - 1
 		
 	return value
-
-## Obtains number of alive cells around the given position. If the position is around the
-## edges, it is wrapped around
-## returns: Number of cells around the provided position in the previous grid
-func _get_alive_around(x: int, y: int) -> int:
-	var alive_around: int = 0
-	
-	for dx in [-1, 0, 1]:
-		for dy in [-1, 0, 1]:
-			# Check only cells around the given one
-			if dx == 0 and dy == 0:
-				continue
-				
-			var checked_x: int = _wrap_around(x + dx, 0, properties.dimensions.x - 1)
-			var checked_y: int = _wrap_around(y + dy, 0, properties.dimensions.y - 1)
-			
-			if get_state_at_previous(checked_x, checked_y):
-				alive_around += 1
-				
-	return alive_around
 
 
 func _grid_properties_changed() -> void:
